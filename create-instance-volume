@@ -273,13 +273,14 @@ check_ssh_connection() {
 }
 
 generate_volume() {
-	local size=`du -shBM $BACKUP_DIR | cut -f1 | sed s/M//`
-	
+	du -shBM $BACKUP_DIR 1>/dev/null
 	if [ $? -ne 0 ];
 	then
 		log "You didn't have permission to backup folder $BACKUP_DIR"
 		exit 1	
 	fi
+	
+	local size=`du -shBM $BACKUP_DIR | cut -f1 | sed s/M//`
 	
 	local minum_size=0
 	local g_size
